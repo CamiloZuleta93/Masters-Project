@@ -72,37 +72,37 @@ position_features = {
                 "dribbling_score", "ball_control_score", "composure_score", "stamina_score", "reactions_score", "yellow_cards",
                 "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Attacking Midfield": ["player_id", "weight", "height_cm","foot_id",  "is_top5_league_team",
+            "Attacking Midfield": ["player_id", "weight","foot_id",  "is_top5_league_team",
                 "total_matches", "FIFA_score", "vision_score", "short_passing_score", "passing_score", "long_passing_score",
                 "dribbling_score", "ball_control_score", "composure_score", "agility_score", "finishing_score", "shot_power_score",
                 "assists", "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Left Winger": ["player_id", "height_cm", "weight", "height_cm","foot_id",  "is_top5_league_team",
+            "Left Winger": ["player_id", "height_cm", "weight","foot_id",  "is_top5_league_team",
                 "total_matches", "FIFA_score", "acceleration_score", "sprint_score", "dribbling_score", "agility_score",
                 "crossing_score", "passing_score", "finishing_score", "shot_power_score", "ball_control_score", "stamina_score",
                 "vision_score", "goals", "assists", "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Right Winger": ["player_id", "height_cm", "weight","height_cm", "foot_id",  "is_top5_league_team",
+            "Right Winger": ["player_id", "height_cm", "weight", "foot_id",  "is_top5_league_team",
                 "total_matches", "FIFA_score", "acceleration_score", "sprint_score", "dribbling_score", "agility_score",
                 "crossing_score", "passing_score", "finishing_score", "shot_power_score", "ball_control_score", "stamina_score",
                 "vision_score", "goals", "assists", "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Left Midfield": ["player_id", "height_cm", "weight","height_cm", "foot_id",  "is_top5_league_team",
+            "Left Midfield": ["player_id", "height_cm", "weight", "foot_id",  "is_top5_league_team",
                 "total_matches", "FIFA_score", "acceleration_score", "sprint_score", "dribbling_score", "agility_score",
                 "crossing_score", "short_passing_score", "passing_score", "long_passing_score", "stamina_score", "vision_score",
                 "assists", "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Right Midfield": ["player_id", "height_cm", "weight","height_cm","foot_id",  "is_top5_league_team",
+            "Right Midfield": ["player_id", "weight", "height_cm","foot_id",  "is_top5_league_team",
                 "total_matches", "FIFA_score", "acceleration_score", "sprint_score", "dribbling_score", "agility_score",
                 "crossing_score", "short_passing_score", "passing_score", "long_passing_score", "stamina_score", "vision_score",
                 "assists", "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Centre-Forward": ["player_id", "height_cm", "weight", "height_cm","foot_id",  "is_top5_league_team",
+            "Centre-Forward": ["player_id", "height_cm", "weight","foot_id",  "is_top5_league_team",
                 "total_matches", "FIFA_score", "goals", "finishing_score", "shot_power_score", "heading_accuracy_score",
                 "ball_control_score", "agility_score", "acceleration_score", "sprint_score", "balance_score", "dribbling_score",
                 "jumping_score", "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
             ],
-            "Second Striker": ["player_id","height_cm", "weight", "height_cm","foot_id", "is_top5_league_team",
+            "Second Striker": ["player_id","height_cm", "weight","foot_id", "is_top5_league_team",
                 "total_matches", "FIFA_score", "goals", "finishing_score", "shot_power_score", "vision_score", "dribbling_score",
                 "agility_score", "acceleration_score", "sprint_score", "balance_score", "ball_control_score", "assists",
                 "yellow_cards", "red_cards", "minutes_played", "total_missed_matches_inj","completed_minutes_ratio"
@@ -301,15 +301,22 @@ if player_name_input:
                     # Exclude players from the specified teams
                     (df_2024_2025["club_name"].isin(exclude_teams) == False))
                     ]
+                
                 position_feature_set = position_features[input_player_position]
+               
                 # Include additional features for the selected player
                 position_feature_set += ["club_country", "country","Latitude_country_player","Longitude_country_player", "club_country_latitude","club_country_longitude"]
                 df_filtered = df_filtered[position_feature_set]
                 
+                
                 # Filter complete dataset including the id players taken in the df_filtered
+
 
                 # The first position of df_filter_complete is the player we are going to replace
                 df_filter_complete = pd.DataFrame(columns=position_feature_set)
+                st.write(df_filter_complete = pd.DataFrame(columns=position_feature_set)
+)
+                
                 
                 df_filter_complete= df[df["player_id"] == st.session_state.selected_id]
                 
@@ -320,7 +327,7 @@ if player_name_input:
                 # Use the selected player's club country latitude and longitude
                 clubs_latitude = df[df["player_id"] == st.session_state.selected_id]["club_country_latitude"].values[0]
                 clubs_longitude = df[df["player_id"] == st.session_state.selected_id]["club_country_longitude"].values[0]
-               
+                 
 
                 # Calculate the distance between the player's country and the club's country using the Haversine formula
                 def haversine_np(lat1, lon1, lat2, lon2):
@@ -377,8 +384,10 @@ if player_name_input:
                     weighted["player_id"] = player_id
 
                     return weighted
+                    
 
-                                          
+
+                                        
                 # Create a new DataFrame with the averaged features per player
                 def averaged_features_player(df_filter_complete):
                     records = []
@@ -389,7 +398,7 @@ if player_name_input:
                     return df_weighted
                 
                 df_weighted = averaged_features_player(df_filter_complete)
-                st.write(position_feature_set)
+                
                 # Perform the KNN search
                 input_vector = df_weighted[df_weighted["player_id"] == st.session_state.selected_id]
     
@@ -442,13 +451,16 @@ if player_name_input:
                 # Logistic regression model
                 # Filter only players with the same position as the input player
                 X = df_transfers[df_transfers["field_sub_position"] == input_player_position]
+                st.write(X)
+
 
                 # Select only the relevant features
                 X = X[position_feature_set]
                 y = df_transfers.loc[X.index, 'successful_adaptation']
-
+                
                 # Drop the player_id column
                 X = X.drop(columns=["player_id"])
+
 
                 # Split the data into train and test sets
                 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -460,6 +472,7 @@ if player_name_input:
 
                 # Add constant term for statsmodels
                 X_train_sm = sm.add_constant(X_train_scaled)
+                
 
                 # Fit logistic regression model using statsmodels (to get p-values)
                 logit_model = sm.Logit(y_train, X_train_sm)
