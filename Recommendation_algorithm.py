@@ -451,9 +451,7 @@ if player_name_input:
                 # Logistic regression model
                 # Filter only players with the same position as the input player
                 X = df_transfers[df_transfers["field_sub_position"] == input_player_position]
-                st.write(X)
-
-
+                
                 # Select only the relevant features
                 X = X[position_feature_set]
                 y = df_transfers.loc[X.index, 'successful_adaptation']
@@ -798,9 +796,45 @@ if player_name_input:
 
                     max_limits = {
                         'Left Winger': 1, 'Right Winger': 1,
-                        'Left-Back': 1, 'Right-Back': 1,
-                        'Left Midfield': 1, 'Right Midfield': 1
+                        'Left-Back': 1, 'Right-Back': 1, 'Central Midfield': 2,
+                        'Left Midfield': 1, 'Right Midfield': 1, 'Centre-Forward': 1
                     }
+
+                    # Filter the players from the same team and season
+                    df_team = df_team_stats[
+                        (df_team_stats['club_name'] == input_player_team) & 
+                        (df_team_stats['season'] == '2024/2025')
+                    ]
+
+                    df_team_sorted = df_team.sort_values(
+                        by=['total_matches', 'minutes_played'], 
+                        ascending=[False, False]
+                    )
+
+                    positions = df_team_sorted['field_sub_position'].unique()
+
+                    # If no Right Winger but there is a Left Winger, convert one
+                    if 'Right Winger' not in positions and 'Left Winger' in positions:
+                        # Promote the top-performing Left Winger to Right Winger
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left Winger'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Right Winger'
+
+                    # Similarly, if no Left Winger but a Right Winger exists
+                    elif 'Left Winger' not in positions and 'Right Winger' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Right Winger'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Left Winger'
+
+                    # If no left back but there is a right back, convert one
+                    if 'Left-Back' not in positions and 'Right-Back' in positions:
+                        # Promote the top-performing Right Back to Left Back
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Right-Back'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Left-Back'
+                    
+                    # If no right back but there is a left back, convert one
+                    elif 'Right-Back' not in positions and 'Left-Back' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left-Back'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Right-Back'
+                                       
 
                     order = [
                         "Goalkeeper", "Right-Back", "Centre-Back", "Centre-Back", "Left-Back",
@@ -814,16 +848,7 @@ if player_name_input:
                     if input_player_position not in order:
                         order.append(input_player_position)
 
-                    # Filter the players from the same team and season
-                    df_team = df_team_stats[
-                        (df_team_stats['club_name'] == input_player_team) & 
-                        (df_team_stats['season'] == '2024/2025')
-                    ]
-
-                    df_team_sorted = df_team.sort_values(
-                        by=['total_matches', 'minutes_played'], 
-                        ascending=[False, False]
-                    )
+                   
 
                     starting_xi = []
                     already_selected_players = set()
@@ -886,20 +911,57 @@ if player_name_input:
                     return sorted_xi
 
 
-
+                # Lineup 4-4-2
                 def new_11_team_2(df_team_stats, input_player_position, input_player_team, best_candidate_player):
                     # Define min & max limits for positions
                     min_positions = {
                         'Goalkeeper': 1, 'Right-Back': 1, 'Centre-Back': 2, 'Left-Back': 1,
-                        'Central Midfield': 1, 'Centre-Forward': 2, 'Left Winger': 1,
+                        'Defensive Midfield':1,'Central Midfield': 1, 'Centre-Forward': 2, 'Left Winger': 1,
                         'Right Winger': 1
                     }
 
                     max_limits = {
                         'Left Winger': 1, 'Right Winger': 1,
-                        'Left-Back': 1, 'Right-Back': 1,
-                        'Left Midfield': 1, 'Right Midfield': 1,  'Central Midfield': 1,
+                        'Left-Back': 1, 'Right-Back': 1, 'Central Midfield': 2, 'Defensive Midfield':2,
+                        'Left Midfield': 1, 'Right Midfield': 1, 'Centre-Forward': 2,
                     }
+
+                    
+                    # Filter the players from the same team and season
+                    df_team = df_team_stats[
+                        (df_team_stats['club_name'] == input_player_team) & 
+                        (df_team_stats['season'] == '2024/2025')
+                    ]
+
+                    df_team_sorted = df_team.sort_values(
+                        by=['total_matches', 'minutes_played'], 
+                        ascending=[False, False]
+                    )
+
+                    positions = df_team_sorted['field_sub_position'].unique()
+                    # If no Right Winger but there is a Left Winger, convert one
+                    if 'Right Winger' not in positions and 'Left Winger' in positions:
+                        # Promote the top-performing Left Winger to Right Winger
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left Winger'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Right Winger'
+
+                    # Similarly, if no Left Winger but a Right Winger exists
+                    elif 'Left Winger' not in positions and 'Right Winger' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Right Winger'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Left Winger'
+
+                    # If no left back but there is a right back, convert one
+                    if 'Left-Back' not in positions and 'Right-Back' in positions:
+                        # Promote the top-performing Right Back to Left Back
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Right-Back'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Left-Back'
+                    
+                    # If no right back but there is a left back, convert one
+                    elif 'Right-Back' not in positions and 'Left-Back' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left-Back'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Right-Back'
+                    
+                    
 
                     order = [
                         "Goalkeeper", "Right-Back", "Centre-Back", "Centre-Back", "Left-Back",
@@ -984,6 +1046,7 @@ if player_name_input:
 
                     return sorted_xi
                 
+                #Line up 4-3-3
                 def new_11_team_3(df_team_stats, input_player_position, input_player_team, best_candidate_player):
                     # Define min & max limits for positions
                     min_positions = {
@@ -998,6 +1061,40 @@ if player_name_input:
                         'Central Midfield': 1, 'Attacking Midfield': 2,'Centre-Forward': 1
                     }
 
+                    # Filter the players from the same team and season
+                    df_team = df_team_stats[
+                        (df_team_stats['club_name'] == input_player_team) & 
+                        (df_team_stats['season'] == '2024/2025')
+                    ]
+
+                    df_team_sorted = df_team.sort_values(
+                        by=['total_matches', 'minutes_played'], 
+                        ascending=[False, False]
+                    )
+
+                    positions = df_team_sorted['field_sub_position'].unique()
+                    if 'Right Winger' not in positions and 'Left Winger' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left Winger'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Right Winger'
+
+                    # Similarly, if no Left Winger but a Right Winger exists
+                    elif 'Left Winger' not in positions and 'Right Winger' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Right Winger'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Left Winger'
+                        
+                    # If no left back but there is a right back, convert one
+                    if 'Left-Back' not in positions and 'Right-Back' in positions:
+                        # Promote the top-performing Right Back to Left Back
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Right-Back'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Left-Back'
+                    
+                    # If no right back but there is a left back, convert one
+                    elif 'Right-Back' not in positions and 'Left-Back' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left-Back'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Right-Back'
+
+                    
+
                     order = [
                         "Goalkeeper", "Right-Back", "Centre-Back", "Centre-Back", "Left-Back",
                         "Defensive Midfield", "Central Midfield", "Attacking Midfield", "Right Winger",
@@ -1010,16 +1107,7 @@ if player_name_input:
                     if input_player_position not in order:
                         order.append(input_player_position)
 
-                    # Filter the players from the same team and season
-                    df_team = df_team_stats[
-                        (df_team_stats['club_name'] == input_player_team) & 
-                        (df_team_stats['season'] == '2024/2025')
-                    ]
-
-                    df_team_sorted = df_team.sort_values(
-                        by=['total_matches', 'minutes_played'], 
-                        ascending=[False, False]
-                    )
+                    
 
                     starting_xi = []
                     already_selected_players = set()
@@ -1089,23 +1177,39 @@ if player_name_input:
                 fig, ax = pitch.draw(figsize=(10, 7))
 
                 # Predefined coordinates for common positions (base points)
-                base_positions = {
-                    'Goalkeeper': [(5, 40)],
-                    'Right-Back': [(20, 70)],
-                    'Left-Back': [(20, 10)],
-                    'Centre-Back': [(20, 30), (20, 50)],
-                    'Defensive Midfield': [(40, 30), (40, 50)],
-                    'Central Midfield': [(60, 30), (60, 50)],
-                    'Attacking Midfield': [(80, 40)],
-                    'Left Midfield': [(65, 20)],
-                    'Right Midfield': [(65, 60)],
-                    'Left Winger': [(80, 15)],
-                    'Right Winger': [(80, 65)],
-                    'Centre-Forward': [(100, 35), (100, 45)],
-                    'Second Striker': [(90, 40)]
-                }
+                if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_1]:
+                    base_positions = {
+                        'Goalkeeper': [(5, 40)],
+                        'Right-Back': [(20, 70)],
+                        'Left-Back': [(20, 10)],
+                        'Centre-Back': [(20, 30), (20, 50)],
+                        'Defensive Midfield': [(50, 30)],
+                        'Central Midfield': [(50, 50)],          
+                        'Attacking Midfield': [(75, 40)],
+                        'Left Midfield': [(75, 20)],
+                        'Right Midfield': [(75, 60)],
+                        'Left Winger': [(75, 10)],
+                        'Right Winger': [(75, 70)],
+                        'Centre-Forward': [(100, 40)],
+                        'Second Striker': [(100, 40)]
+                        }
+                else:
+                    base_positions = {
+                        'Goalkeeper': [(5, 40)],
+                        'Right-Back': [(20, 70)],
+                        'Left-Back': [(20, 10)],
+                        'Centre-Back': [(20, 30), (20, 50)],
+                        'Central Midfield': [(50, 50)],          
+                        'Attacking Midfield': [(75, 40)],
+                        'Left Midfield': [(75, 20)],
+                        'Right Midfield': [(75, 60)],
+                        'Left Winger': [(75, 10)],
+                        'Right Winger': [(75, 70)],
+                        'Centre-Forward': [(100, 40)],
+                        'Second Striker': [(100, 40)]
+              }
 
-                # Contador de jugadores por posición
+                # Counting players by position
                 position_counts = Counter([p['field_sub_position'] for p in starting_xi_1])
                 position_counter = {}
                 final_positions = {}
@@ -1189,22 +1293,39 @@ if player_name_input:
                 fig2, ax = pitch.draw(figsize=(10, 7))
 
                 # Predefined coordinates for common positions (base points)
-                base_positions = {
-                    'Goalkeeper': [(5, 40)],
-                    'Right-Back': [(20, 70)],
-                    'Left-Back': [(20, 10)],
-                    'Centre-Back': [(20, 30), (20, 50)],
-                    'Defensive Midfield': [(40, 30), (40, 50)],
-                    'Central Midfield': [(60, 30)],
-                   
-                    'Attacking Midfield': [(60, 50)],
-                    'Left Midfield': [(65, 20)],
-                    'Right Midfield': [(65, 60)],
-                    'Left Winger': [(80, 10)],
-                    'Right Winger': [(80, 70)],
-                    'Centre-Forward': [(100, 30), (100, 50)],
-                    'Second Striker': [(90, 40)]
-                }
+                if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_2]:
+                    base_positions = {
+                        'Goalkeeper': [(5, 40)],
+                        'Right-Back': [(20, 70)],
+                        'Left-Back': [(20, 10)],
+                        'Centre-Back': [(20, 30), (20, 50)],
+                        'Defensive Midfield': [(50, 30)],
+                        'Central Midfield': [(50, 50)],          
+                        'Attacking Midfield': [(75, 10)],
+                        'Attacking Midfield': [(75, 70)],
+                        'Left Midfield': [(75, 10)],
+                        'Right Midfield': [(75, 70)],
+                        'Left Winger': [(75, 10)],
+                        'Right Winger': [(75, 70)],
+                        'Centre-Forward': [(100, 30), (100, 50)],
+                        'Second Striker': [(100, 30), (100, 50)]
+                    }
+                else:
+                    base_positions = {
+                        'Goalkeeper': [(5, 40)],
+                        'Right-Back': [(20, 70)],
+                        'Left-Back': [(20, 10)],
+                        'Centre-Back': [(20, 30), (20, 50)],
+                        'Central Midfield': [(50, 30), (50, 50)],          
+                        'Attacking Midfield': [(75, 10)],
+                        'Attacking Midfield': [(75, 70)],
+                        'Left Midfield': [(75, 10)],
+                        'Right Midfield': [(75, 70)],
+                        'Left Winger': [(75, 10)],
+                        'Right Winger': [(75, 70)],
+                        'Centre-Forward': [(100, 30), (100, 50)],
+                        'Second Striker': [(100, 30), (100, 50)]
+                    }
 
                 positions = base_positions.copy()
 
@@ -1293,21 +1414,38 @@ if player_name_input:
                 fig3, ax = pitch.draw(figsize=(10, 7))
 
                 # Predefined coordinates for common positions (base points)
-                base_positions = {
-                    'Goalkeeper': [(5, 40)],
-                    'Right-Back': [(20, 70)],
-                    'Left-Back': [(20, 10)],
-                    'Centre-Back': [(20, 30), (20, 50)],
-                    
-                    'Central Midfield': [(60,40)],
-                    'Attacking Midfield': [(70, 20),(70, 60)],
-                    'Left Midfield': [(65, 20)],
-                    'Right Midfield': [(65, 60)],
-                    'Left Winger': [(100, 10)],
-                    'Right Winger': [(100, 70)],
-                    'Centre-Forward': [(100, 40)],
-                    
-                }
+                if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_3]:
+                    base_positions = {
+                        'Goalkeeper': [(5, 40)],
+                        'Right-Back': [(20, 70)],
+                        'Left-Back': [(20, 10)],
+                        'Centre-Back': [(20, 30), (20, 50)],
+                        'Central Midfield': [(60,40)],
+                        'Attacking Midfield': [(70, 20), (70, 60)],
+                        
+                        'Left Midfield': [(70, 20)],
+                        'Right Midfield': [(70, 60)],
+                        'Left Winger': [(100, 10)],
+                        'Right Winger': [(100, 70)],
+                        'Centre-Forward': [(100, 40)],
+                        'Second Striker': [(100, 40)]
+                        
+                    }
+                else:
+                    base_positions = {
+                        'Goalkeeper': [(5, 40)],
+                        'Right-Back': [(20, 70)],
+                        'Left-Back': [(20, 10)],
+                        'Centre-Back': [(20, 30), (20, 50)],
+                        'Central Midfield': [(60,40)],
+                        'Attacking Midfield': [(70, 20), (70, 60)],
+                        'Left Midfield': [(70, 20)],
+                        'Right Midfield': [(70, 60)],
+                        'Left Winger': [(100, 10)],
+                        'Right Winger': [(100, 70)],
+                        'Centre-Forward': [(100, 40)],
+                        'Second Striker': [(100, 40)]
+                    }
 
                 # Contador de jugadores por posición
                 position_counts = Counter([p['field_sub_position'] for p in starting_xi_3])
