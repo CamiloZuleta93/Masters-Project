@@ -1312,7 +1312,7 @@ if player_name_input:
                         'Centre-Forward': [(100, 30), (100, 50)],
                         'Second Striker': [(100, 30), (100, 50)]
                     }
-                        elif  'Left Winger' in positions and 'Right Winger' not in positions:
+                    elif  'Left Winger' in positions and 'Right Winger' not in positions:
                             base_positions = {
                             'Goalkeeper': [(5, 40)],
                             'Right-Back': [(20, 70)],
@@ -1327,7 +1327,7 @@ if player_name_input:
                             'Centre-Forward': [(100, 30), (100, 50)],
                             'Second Striker': [(100, 30), (100, 50)]
                     }
-                            elif  'Left Winger' not in positions and 'Right Winger'  in positions:
+                    elif  'Left Winger' not in positions and 'Right Winger'  in positions:
                             base_positions = {
                             'Goalkeeper': [(5, 40)],
                             'Right-Back': [(20, 70)],
@@ -1359,7 +1359,7 @@ if player_name_input:
                         'Centre-Forward': [(100, 30), (100, 50)],
                         'Second Striker': [(100, 30), (100, 50)]
                     }
-                        elif  'Left Winger' in positions and 'Right Winger' not in positions:
+                    elif  'Left Winger' in positions and 'Right Winger' not in positions:
                             base_positions = {
                             'Goalkeeper': [(5, 40)],
                             'Right-Back': [(20, 70)],
@@ -1373,7 +1373,7 @@ if player_name_input:
                             'Centre-Forward': [(100, 30), (100, 50)],
                             'Second Striker': [(100, 30), (100, 50)]
                     }
-                            elif  'Left Winger' not in positions and 'Right Winger'  in positions:
+                    elif  'Left Winger' not in positions and 'Right Winger'  in positions:
                             base_positions = {
                             'Goalkeeper': [(5, 40)],
                             'Right-Back': [(20, 70)],
