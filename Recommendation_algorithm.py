@@ -1178,6 +1178,8 @@ if player_name_input:
 
                 # Predefined coordinates for common positions (base points)
                 if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_1]:
+                    if 'Left Winger' and 'Right Winger' in [p['field_sub_position'] for p in starting_xi_1]:3
+                        
                     base_positions = {
                         'Goalkeeper': [(5, 40)],
                         'Right-Back': [(20, 70)],
@@ -1293,8 +1295,10 @@ if player_name_input:
                 fig2, ax = pitch.draw(figsize=(10, 7))
 
                 # Predefined coordinates for common positions (base points)
-                if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_2]:
-                    base_positions = {
+                positions = [p['field_sub_position'] for p in starting_xi_2]
+                if 'Defensive Midfield' in positions:
+                    if 'Left Winger' in positions and 'Right Winger' in positions:
+                        base_positions = {
                         'Goalkeeper': [(5, 40)],
                         'Right-Back': [(20, 70)],
                         'Left-Back': [(20, 10)],
@@ -1308,24 +1312,82 @@ if player_name_input:
                         'Centre-Forward': [(100, 30), (100, 50)],
                         'Second Striker': [(100, 30), (100, 50)]
                     }
+                        elif  'Left Winger' in positions and 'Right Winger' not in positions:
+                            base_positions = {
+                            'Goalkeeper': [(5, 40)],
+                            'Right-Back': [(20, 70)],
+                            'Left-Back': [(20, 10)],
+                            'Centre-Back': [(20, 30), (20, 50)],
+                            'Defensive Midfield': [(50,30)],
+                            'Central Midfield: [(50,50)],
+                            'Left Midfield': [(75, 10)],
+                            'Right Midfield': [(75, 70)],
+                            'Left Winger': [(75, 10)],
+                            'Attacking Midfield': [(75, 70)],
+                            'Centre-Forward': [(100, 30), (100, 50)],
+                            'Second Striker': [(100, 30), (100, 50)]
+                    }
+                            elif  'Left Winger' not in positions and 'Right Winger'  in positions:
+                            base_positions = {
+                            'Goalkeeper': [(5, 40)],
+                            'Right-Back': [(20, 70)],
+                            'Left-Back': [(20, 10)],
+                            'Centre-Back': [(20, 30), (20, 50)],
+                            'Defensive Midfield': [(50,30)],
+                            'Central Midfield: [(50,50)
+                            'Left Midfield': [(75, 10)],
+                            'Right Midfield': [(75, 10)],
+                            'Right Winger': [(75, 70)],
+                            'Attacking Midfield': [(75, 70)],
+                            'Centre-Forward': [(100, 30), (100, 50)],
+                            'Second Striker': [(100, 30), (100, 50)]
+                    }
+                    
                 else:
-                    base_positions = {
+                    if 'Left Winger' in positions and 'Right Winger' in positions:
+                        base_positions = {
                         'Goalkeeper': [(5, 40)],
                         'Right-Back': [(20, 70)],
                         'Left-Back': [(20, 10)],
                         'Centre-Back': [(20, 30), (20, 50)],
-                        'Central Midfield': [(50, 30)],          
-                        'Attacking Midfield': [(50, 50)],
+                        'Central Midfield': [(50,30)],
+                        'Attacking Midfield': [(50,50)],
                         'Left Midfield': [(75, 10)],
                         'Right Midfield': [(75, 70)],
                         'Left Winger': [(75, 10)],
                         'Right Winger': [(75, 70)],
-                        'Left Winger': [(75, 70)],
-                        'Right Winger': [(75, 10)],
                         'Centre-Forward': [(100, 30), (100, 50)],
                         'Second Striker': [(100, 30), (100, 50)]
                     }
-
+                        elif  'Left Winger' in positions and 'Right Winger' not in positions:
+                            base_positions = {
+                            'Goalkeeper': [(5, 40)],
+                            'Right-Back': [(20, 70)],
+                            'Left-Back': [(20, 10)],
+                            'Centre-Back': [(20, 30), (20, 50)],
+                            'Central Midfield: [(50,30),(50,50)],
+                            'Left Midfield': [(75, 10)],
+                            'Right Midfield': [(75, 70)],
+                            'Left Winger': [(75, 10)],
+                            'Attacking Midfield': [(75, 70)],
+                            'Centre-Forward': [(100, 30), (100, 50)],
+                            'Second Striker': [(100, 30), (100, 50)]
+                    }
+                            elif  'Left Winger' not in positions and 'Right Winger'  in positions:
+                            base_positions = {
+                            'Goalkeeper': [(5, 40)],
+                            'Right-Back': [(20, 70)],
+                            'Left-Back': [(20, 10)],
+                            'Centre-Back': [(20, 30), (20, 50)],
+                            'Central Midfield: [(50,30),(50,50)],
+                            'Left Midfield': [(75, 10)],
+                            'Right Midfield': [(75, 10)],
+                            'Right Winger': [(75, 70)],
+                            'Attacking Midfield': [(75, 70)],
+                            'Centre-Forward': [(100, 30), (100, 50)],
+                            'Second Striker': [(100, 30), (100, 50)]
+            }
+ 
                 positions = base_positions.copy()
 
                 
