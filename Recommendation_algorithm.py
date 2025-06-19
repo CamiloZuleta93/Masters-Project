@@ -915,7 +915,7 @@ if player_name_input:
                 def new_11_team_2(df_team_stats, input_player_position, input_player_team, best_candidate_player):
                     # Define min & max limits for positions
                     min_positions = {
-                        'Goalkeeper': 1, 'Right-Back': 1, 'Centre-Back': 2, 'Left-Back': 1,
+                        'Goalkeeper': 1, 'Right-Back': 1, 'Centre-Back': 2, 'Left-Back': 1,  'Central Midfield': 1, 
                         'Centre-Forward': 2, 'Left Winger': 1,
                         'Right Winger': 1
                     }
