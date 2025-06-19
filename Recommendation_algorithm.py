@@ -1502,7 +1502,7 @@ if player_name_input:
                         'Right-Back': [(20, 70)],
                         'Left-Back': [(20, 10)],
                         'Centre-Back': [(20, 30), (20, 50)],
-                        'Central Midfield': [(60,40),(70,60)],
+                        'Central Midfield': [(60,40),(70,60),(70,20)],
                         'Attacking Midfield': [(70, 20)],
                         'Left Midfield': [(70, 20)],
                         'Right Midfield': [(70, 60)],
