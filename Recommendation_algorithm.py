@@ -1184,7 +1184,7 @@ if player_name_input:
                 if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_1]:
                     if 'Left Winger' and 'Right Winger' in [p['field_sub_position'] for p in starting_xi_1]:
                         
-                    base_positions = {
+                        base_positions = {
                         'Goalkeeper': [(5, 40)],
                         'Right-Back': [(20, 70)],
                         'Left-Back': [(20, 10)],
@@ -1486,7 +1486,7 @@ if player_name_input:
                         'Left-Back': [(20, 10)],
                         'Centre-Back': [(20, 30), (20, 50)],
                         'Defensive Midfield':[(60,40)],
-                        'Central Midfield': [(70, 60)],
+                        'Central Midfield': [(70, 60),(70,20)],
                         'Attacking Midfield': [(70, 20)],
                         'Left Midfield': [(70, 20)],
                         'Right Midfield': [(70, 60)],
@@ -1503,7 +1503,7 @@ if player_name_input:
                         'Left-Back': [(20, 10)],
                         'Centre-Back': [(20, 30), (20, 50)],
                         'Central Midfield': [(60,40),(70,60),(70,20)],
-                        
+                        'Attacking Midfield': [(70, 20)],
                         'Left Midfield': [(70, 20)],
                         'Right Midfield': [(70, 60)],
                         'Left Winger': [(100, 10)],
