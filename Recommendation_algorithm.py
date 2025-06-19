@@ -1301,7 +1301,7 @@ if player_name_input:
                         'Centre-Back': [(20, 30), (20, 50)],
                         'Defensive Midfield': [(50, 30)],
                         'Central Midfield': [(50, 50)],          
-                        'Attacking Midfield': [(75, 10)],
+                        
                         'Attacking Midfield': [(75, 70)],
                         'Left Midfield': [(75, 10)],
                         'Right Midfield': [(75, 70)],
@@ -1317,7 +1317,7 @@ if player_name_input:
                         'Left-Back': [(20, 10)],
                         'Centre-Back': [(20, 30), (20, 50)],
                         'Central Midfield': [(50, 30), (50, 50)],          
-                        'Attacking Midfield': [(75, 10)],
+                        
                         'Attacking Midfield': [(75, 70)],
                         'Left Midfield': [(75, 10)],
                         'Right Midfield': [(75, 70)],
