@@ -1182,7 +1182,7 @@ if player_name_input:
 
                 # Predefined coordinates for common positions (base points)
                 if 'Defensive Midfield' in [p['field_sub_position'] for p in starting_xi_1]:
-                    if 'Left Winger' and 'Right Winger' in [p['field_sub_position'] for p in starting_xi_1]:3
+                    if 'Left Winger' and 'Right Winger' in [p['field_sub_position'] for p in starting_xi_1]:
                         
                     base_positions = {
                         'Goalkeeper': [(5, 40)],
@@ -1503,7 +1503,7 @@ if player_name_input:
                         'Left-Back': [(20, 10)],
                         'Centre-Back': [(20, 30), (20, 50)],
                         'Central Midfield': [(60,40),(70,60),(70,20)],
-                        'Attacking Midfield': [(70, 20)],
+                        
                         'Left Midfield': [(70, 20)],
                         'Right Midfield': [(70, 60)],
                         'Left Winger': [(100, 10)],
