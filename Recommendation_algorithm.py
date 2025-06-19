@@ -1293,7 +1293,7 @@ if player_name_input:
                 st.pyplot(fig)
 
                 starting_xi_2 = new_11_team_2(df, input_player_position, input_player_team, best_candidate_player)
-                st.write(starting_xi_2)
+                
                 # Base pitch
                 pitch = Pitch(pitch_type='statsbomb', pitch_color='grass', line_color='black')
                 fig2, ax = pitch.draw(figsize=(10, 7))
