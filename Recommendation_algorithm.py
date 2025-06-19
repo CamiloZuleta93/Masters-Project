@@ -1320,6 +1320,8 @@ if player_name_input:
                         'Right Midfield': [(75, 70)],
                         'Left Winger': [(75, 10)],
                         'Right Winger': [(75, 70)],
+                        'Left Winger': [(75, 70)],
+                        'Right Winger': [(75, 10)],
                         'Centre-Forward': [(100, 30), (100, 50)],
                         'Second Striker': [(100, 30), (100, 50)]
                     }
