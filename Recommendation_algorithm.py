@@ -960,7 +960,11 @@ if player_name_input:
                     elif 'Right-Back' not in positions and 'Left-Back' in positions:
                         idx = df_team_sorted[df_team_sorted['field_sub_position']=='Left-Back'].index[0]
                         df_team_sorted.at[idx, 'field_sub_position'] = 'Right-Back'
-                    
+
+                    # If no Central Midfielder but there is a Defensive, convert one
+                    elif 'Central Midfield' not in positions and 'Defensive Midfield' in positions:
+                        idx = df_team_sorted[df_team_sorted['field_sub_position']=='Defensive Midfield'].index[0]
+                        df_team_sorted.at[idx, 'field_sub_position'] = 'Central Midfield'
                     
 
                     order = [
