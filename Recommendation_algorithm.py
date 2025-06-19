@@ -916,7 +916,7 @@ if player_name_input:
                     # Define min & max limits for positions
                     min_positions = {
                         'Goalkeeper': 1, 'Right-Back': 1, 'Centre-Back': 2, 'Left-Back': 1,
-                        'Defensive Midfield':1,'Central Midfield':1, 'Centre-Forward': 2, 'Left Winger': 1,
+                        'Defensive Midfield':1, 'Centre-Forward': 2, 'Left Winger': 1,
                         'Right Winger': 1
                     }
 
