@@ -1058,7 +1058,7 @@ if player_name_input:
                         'Left Winger': 1, 'Right Winger': 1,
                         'Left-Back': 1, 'Right-Back': 1,
                         'Centre-Back': 2, 'Left-Back': 1,
-                        'Central Midfield': 1, 'Attacking Midfield': 2,'Centre-Forward': 1
+                        'Central Midfield': 3, 'Attacking Midfield': 2,'Centre-Forward': 1
                     }
 
                     # Filter the players from the same team and season
